@@ -28,7 +28,7 @@ Temos um sistema de biblioteca da PUC MG e queremos testar esse sistema.   Imagi
 -  `testRetornarLivroDeMembro()`: Verifique se um livro pode ser devolvido por um membro.
 -  `testEmprestarLivroNaoDisponivel()`: Verifique o que acontece quando tenta-se emprestar um livro que já está 
    emprestado.
-### Refaforação
+### Refatoração
 Com base nos testes que você escreveu, refatore o código se necessário para melhorar sua qualidade e manutenibilidade, garantindo que os testes ainda passem após as alterações.
 
 

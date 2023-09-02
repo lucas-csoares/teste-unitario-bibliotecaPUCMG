@@ -3,16 +3,31 @@ package org.example.entities;
 import org.example.enums.StatusLivro;
 
 public class Livro {
+    private static Integer proximoId = 1;
     private Integer id;
     private String titulo;
     private String autor;
     private StatusLivro status;
 
-    public Livro(Integer id, String titulo, String autor) {
-        this.id = id;
+    public Livro(String titulo, String autor) {
+        this.id = proximoId++;
         this.titulo = titulo;
         this.autor = autor;
         status = StatusLivro.DISPONIVEL;
+    }
+
+    public void emprestarLivro() throws Exception {
+        if (this.getStatus() == StatusLivro.DISPONIVEL)
+            this.setStatus(StatusLivro.EMPRESTADO);
+        else
+            throw new Exception("Livro ja emprestado!");
+    }
+
+    public void retornarLivro() throws Exception {
+        if (this.getStatus() == StatusLivro.EMPRESTADO)
+            this.setStatus(StatusLivro.DISPONIVEL);
+        else
+            throw new Exception("Livro nao esta emprestado!");
     }
 
     public Integer getId() {

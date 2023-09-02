@@ -39,4 +39,12 @@ public class Membro {
     public void setLivrosEmprestados(List<Livro> livrosEmprestados) {
         this.livrosEmprestados = livrosEmprestados;
     }
+
+    public void addLivrosEmprestados(Livro livro) {
+        livrosEmprestados.add(livro);
+    }
+
+    public void devolverLivro(Livro livro) {
+        livrosEmprestados.remove(livro);
+    }
 }

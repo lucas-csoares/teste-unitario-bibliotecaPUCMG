@@ -28,7 +28,7 @@ public class Biblioteca {
     }
 
 
-    public void emprestarLivro(int livroId, int membroId) {
+    public void emprestarLivro(int livroId, int membroId) throws Exception {
         Livro livro = autenticarLivro(livroId);
         Membro membro = autenticarMembro(membroId);
         verificarDisponibilidadeLivro(livro);
@@ -36,26 +36,27 @@ public class Biblioteca {
 
         membro.addLivrosEmprestados(livro);
         acervo.remove(livro);
-        livro.setStatus(StatusLivro.EMPRESTADO);
+        livro.emprestarLivro();
     }
 
 
     public void registrarLivro(Livro livro) {
-         if(acervo.contains(livro))
-             throw new IllegalStateException("O livro já tem no acervo");
+        if (acervo.contains(livro))
+            throw new IllegalStateException("O livro já tem no acervo");
         acervo.add(livro);
     }
 
-    public void retornarLivro(int livroId, int membroId) {
+    public void retornarLivro(int livroId, int membroId) throws Exception {
         Livro livro = autenticarLivro(livroId);
         Membro membro = autenticarMembro(membroId);
         verificarLivroNoAcervo(livro);
 
-        if(!membro.getLivrosEmprestados().contains(livro)) throw new NoSuchElementException("O livro está emprestado " +
-                "a outro membro");
+        if (!membro.getLivrosEmprestados().contains(livro))
+            throw new NoSuchElementException("O livro está emprestado " +
+                    "a outro membro");
 
         membro.devolverLivro(livro);
-        livro.setStatus(StatusLivro.DISPONIVEL);
+        livro.retornarLivro();
         acervo.add(livro);
     }
 
@@ -72,7 +73,7 @@ public class Biblioteca {
     }
 
     private void verificarLivroNoAcervo(Livro livro) {
-        if(livro.getStatus() == StatusLivro.DISPONIVEL)
+        if (livro.getStatus() == StatusLivro.DISPONIVEL)
             throw new IllegalStateException("O livro não foi emprestado");
     }
 

@@ -5,12 +5,13 @@ import java.util.List;
 
 public class Membro {
     private Integer id;
+    private static Integer proximoId = 1;
     private String nome;
 
     private List<Livro> livrosEmprestados;
 
-    public Membro(Integer id, String nome) {
-        this.id = id;
+    public Membro(String nome) {
+        this.id = proximoId++;
         this.nome = nome;
         livrosEmprestados = new ArrayList<>();
     }

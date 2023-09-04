@@ -2,8 +2,9 @@ package org.example.entities;
 
 import org.example.enums.StatusLivro;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
+
 
 public class Biblioteca {
 
@@ -12,7 +13,10 @@ public class Biblioteca {
     private List<Membro> membrosCadastrados;
 
     public Biblioteca(List<Livro> acervo) {
+
         this.acervo = acervo;
+
+    membrosCadastrados = new ArrayList<>();
     }
 
     public List<Livro> getAcervo() {
@@ -35,14 +39,13 @@ public class Biblioteca {
 
 
         membro.addLivrosEmprestados(livro);
-        acervo.remove(livro);
         livro.emprestarLivro();
     }
 
 
-    public void registrarLivro(Livro livro) {
+    public void registrarLivro(Livro livro) throws Exception{
         if (acervo.contains(livro))
-            throw new IllegalStateException("O livro já tem no acervo");
+            throw new Exception("O livro já tem no acervo");
         acervo.add(livro);
     }
 
@@ -52,34 +55,33 @@ public class Biblioteca {
         verificarLivroNoAcervo(livro);
 
         if (!membro.getLivrosEmprestados().contains(livro))
-            throw new NoSuchElementException("O livro está emprestado " +
+            throw new Exception("O livro está emprestado " +
                     "a outro membro");
 
         membro.devolverLivro(livro);
         livro.retornarLivro();
-        acervo.add(livro);
     }
 
-    private Livro autenticarLivro(int livroId) {
+    private Livro autenticarLivro(int livroId) throws Exception {
         Livro livro = acervo.stream().filter(x -> x.getId() == livroId).findFirst().orElseThrow(() ->
-                new NullPointerException("Livro não existe no acervo"));
+                new Exception("Livro não existe no acervo"));
         return livro;
     }
 
-    private Membro autenticarMembro(int membroId) {
+    private Membro autenticarMembro(int membroId) throws Exception{
         Membro membro = membrosCadastrados.stream().filter(x -> x.getId() == membroId).findFirst().orElseThrow(() ->
-                new NoSuchElementException("Membro não cadastrado"));
+                new Exception("Membro não cadastrado"));
         return membro;
     }
 
-    private void verificarLivroNoAcervo(Livro livro) {
+    private void verificarLivroNoAcervo(Livro livro) throws Exception{
         if (livro.getStatus() == StatusLivro.DISPONIVEL)
-            throw new IllegalStateException("O livro não foi emprestado");
+            throw new Exception("O livro não foi emprestado");
     }
 
-    private void verificarDisponibilidadeLivro(Livro livro) {
+    private void verificarDisponibilidadeLivro(Livro livro) throws Exception{
         if (livro.getStatus() != StatusLivro.DISPONIVEL) {
-            throw new IllegalStateException("O livro não está disponível para empréstimo");
+            throw new Exception("O livro não está disponível para empréstimo");
         }
     }
 

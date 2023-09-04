@@ -23,7 +23,8 @@ public class Biblioteca {
         return acervo;
     }
 
-    public void setAcervo(List<Livro> acervo) {
+    // não pode modificar o acervo livremente, por isso coloquei modificar de acesso private.
+    private void setAcervo(List<Livro> acervo) {
         this.acervo = acervo;
     }
 
